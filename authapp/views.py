@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
@@ -28,8 +30,10 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы успешно зарегистрировались')
+            user = form.save()
+            send_verify_link(user)
+            # form.save()
+            # messages.success(request, 'Вы успешно зарегистрировались')
             return HttpResponseRedirect(reverse('users:login'))
     else:
         form = UserRegisterForm()
@@ -57,3 +61,14 @@ def profile(request):
         'baskets': Basket.objects.filter(user=request.user),
     }
     return render(request, 'authapp/profile.html', context)
+
+
+def send_verify_link(user):
+    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+    subject = 'Account verify'
+    message = f'Your link for account activation: {settings.DOMAIN_NAME}{verify_link}'
+    return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+
+def verify(request, email, key):
+    pass

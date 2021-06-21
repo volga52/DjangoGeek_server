@@ -139,3 +139,17 @@ LOGIN_URL = '/users/login/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'django@gb.local'
+EMAIL_HOST_PASSWORD = 'geekbrains'
+EMAIL_USE_SSL = False
+
+# python -m smtpd
+# EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'tmp/emails/'
+
+DOMAIN_NAME = 'http://localhost:8000/'
