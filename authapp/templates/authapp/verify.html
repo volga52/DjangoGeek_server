@@ -1,0 +1,14 @@
+﻿{% extends 'authapp/base.html' %}
+
+{% block content%}
+    <div class="row" style="flex-direction: column;text-align: center;">
+        {% if user.is_authenticated %}
+            <h1>Поздравляем!</h1>
+            <p>Вы успешно активировали аккаунт!</p>
+        {% else %}
+            <h1>Что-то пошло не так</h1>
+            <p> К сожелению, активация аккаунта не удалась. Обратитесь в техподдержку</p>
+        {% endif %}
+            <a href="{% url 'index' %}" class="btn btn-primary">На главную</a>
+    </div>
+{% endblock %}
