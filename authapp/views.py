@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
-from django.contrib import auth, messages
+from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -64,7 +64,7 @@ def profile(request):
 
 
 def send_verify_link(user):
-    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+    verify_link = reverse('users:verify', args=[user.email, user.activation_key])
     subject = 'Account verify'
     message = f'Your link for account activation: {settings.DOMAIN_NAME}{verify_link}'
     return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
